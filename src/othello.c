@@ -11,6 +11,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <cilk/cilk.h>
+#include <time.h>
 
 #define RED     "\x1B[31m"
 #define BLU     "\x1B[34m"
@@ -45,6 +46,7 @@ int anim_mode = 0;
 int board_size = 8;
 int delay = 0;
 int threads = 1;
+int measure_time = 0;
 
 char** board;
 
@@ -312,7 +314,7 @@ void get_flags(int argc, char * argv[]) {
                 }
                 break;
             case 't':
-                // IMPLEMENT THIS OPTION
+                measure_time = TRUE;
                 break;
             case '?':
             default:
@@ -324,6 +326,11 @@ void get_flags(int argc, char * argv[]) {
 
 
 int main (int argc, char * argv[]) {
+    //time start
+
+    double dif;
+    clock_t start = clock();
+    
     get_flags(argc,argv);
     // argc -= optind;
     // argv += optind;
@@ -353,5 +360,11 @@ int main (int argc, char * argv[]) {
         usleep(delay*1000);
 	}
     finish_game();
+
+    if(measure_time){
+        clock_t end = clock();
+        dif =  end - start;
+        printf ("Time elapsed: %lf ms \n", dif );
+    }
 }
 
