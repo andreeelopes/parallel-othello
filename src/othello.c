@@ -11,7 +11,10 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <cilk/cilk.h>
+#include <cilk/cilk_api.h>
 #include <time.h>
+#include <unistd.h>
+
 
 #define RED     "\x1B[31m"
 #define BLU     "\x1B[34m"
@@ -255,7 +258,6 @@ int make_move(char color) {
     int i, j;
     move best_move, m;
     best_move.heuristic = 0;
-	
 	for (i = 0; i < board_size; i++) {
 		for (j = 0; j < board_size; j++) {
             init_move(&m,i,j,color);
@@ -330,7 +332,8 @@ int main (int argc, char * argv[]) {
 
     double dif;
     clock_t start = clock();
-    
+    int ncores = sysconf(_SC_NPROCESSORS_ONLN);
+    //__cilkrts_set_param("nworkers", threads);
     get_flags(argc,argv);
     // argc -= optind;
     // argv += optind;
@@ -360,6 +363,8 @@ int main (int argc, char * argv[]) {
         usleep(delay*1000);
 	}
     finish_game();
+
+    printf("Cores:%d\n", ncores );
 
     if(measure_time){
         clock_t end = clock();
