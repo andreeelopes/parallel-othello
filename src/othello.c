@@ -256,9 +256,10 @@ void get_move(move* m) {
 //PLEASE PARALELIZE THIS FUNCTION
 int make_move(char color) {
     int i, j;
-    move best_move, m;
+    move best_move;
     best_move.heuristic = 0;
-	for (i = 0; i < board_size; i++) {
+	cilk_for (i = 0; i < board_size; i++) {
+        move m;
 		for (j = 0; j < board_size; j++) {
             init_move(&m,i,j,color);
             get_move(&m);
@@ -314,6 +315,12 @@ void get_flags(int argc, char * argv[]) {
                     printf("Minimum threads is 1.\n");
                     help(argv[0]);
                 }
+                else{
+                    char str[13];
+                    sprintf(str, "%d", threads);
+                    printf("number of threads: %s\n", str);
+                    __cilkrts_set_param("nworkers", "str");
+                }
                 break;
             case 't':
                 measure_time = TRUE;
@@ -333,7 +340,6 @@ int main (int argc, char * argv[]) {
     double dif;
     clock_t start = clock();
     int ncores = sysconf(_SC_NPROCESSORS_ONLN);
-    //__cilkrts_set_param("nworkers", threads);
     get_flags(argc,argv);
     // argc -= optind;
     // argv += optind;
@@ -364,7 +370,7 @@ int main (int argc, char * argv[]) {
 	}
     finish_game();
 
-    printf("Cores:%d\n", ncores );
+    printf("Number of Cores:%d\n", ncores );
 
     if(measure_time){
         clock_t end = clock();
