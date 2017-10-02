@@ -255,19 +255,28 @@ void get_move(move* m) {
 
 //PLEASE PARALELIZE THIS FUNCTION
 int make_move(char color) {
-    int i, j;
-    move best_move;
-    best_move.heuristic = 0;
+    int i;
+
+    best_move[] map = malloc(sizeof(move) * board_size);
+
 	cilk_for (i = 0; i < board_size; i++) {
         move m;
+        int j;
+        best_move[i].heuristic = 0;
+
 		for (j = 0; j < board_size; j++) {
             init_move(&m,i,j,color);
             get_move(&m);
-			if (m.heuristic > best_move.heuristic) {
-				best_move = m;
+			if (m.heuristic > best_move[i].heuristic) {
+				best_move[i] = m;
 			}
 		}
 	}
+
+    for
+
+
+
 	if (best_move.heuristic > 0) {
 		flip_board(&best_move);
 		return TRUE;	//made a move
@@ -318,7 +327,7 @@ void get_flags(int argc, char * argv[]) {
                 else{
                     char str[13];
                     sprintf(str, "%d", threads);
-                    printf("number of threads: %s\n", str);
+                    //printf("number of threads: %s\n", str);
                     __cilkrts_set_param("nworkers", "str");
                 }
                 break;
@@ -370,7 +379,7 @@ int main (int argc, char * argv[]) {
 	}
     finish_game();
 
-    printf("Number of Cores:%d\n", ncores );
+    //printf("Number of Cores:%d\n", ncores );
 
     if(measure_time){
         clock_t end = clock();
