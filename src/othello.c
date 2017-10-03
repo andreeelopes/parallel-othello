@@ -199,7 +199,7 @@ int get_direction_heuristic(move* m, char opp, int inc_i, int inc_j) {
 		i += inc_i;
 		j += inc_j;
 	}
-	if (curr == m->color)
+ if (curr == m->color)
 		return heuristic;
 	else
 		return 0;
@@ -257,7 +257,7 @@ void get_move(move* m) {
 int make_move(char color) {
     int i;
 
-    best_move[] map = malloc(sizeof(move) * board_size);
+    move* best_move = malloc(sizeof(move) * board_size);
 
 	cilk_for (i = 0; i < board_size; i++) {
         move m;
@@ -272,13 +272,18 @@ int make_move(char color) {
 			}
 		}
 	}
+    
+  // move best_movee = __sec_reduce_max (best_move[0:board_size].heuristic);
+  // move best_movee;
+  // int max = 0;
+  // for(i = 0; i < board_size; i++)
+  //   if (best_move[i].heuristic > max){ 
+  //     max = best_move[i].heuristic;
+  //     best_movee = best_move[i];
+  //   }
 
-    for
-
-
-
-	if (best_move.heuristic > 0) {
-		flip_board(&best_move);
+	if (best_movee.heuristic > 0) {
+		flip_board(&best_movee);
 		return TRUE;	//made a move
 	} else 
 		return FALSE;	//no move to make
