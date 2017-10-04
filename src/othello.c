@@ -46,6 +46,7 @@ typedef struct {
 
 typedef struct {
     double serial_time;
+    double parallel_time;
 };
 
 char print_mode = 'n';
@@ -154,8 +155,8 @@ void free_board() {
 }
 
 void finish_game() {
-    print_board();
-    print_scores();
+    //print_board();
+    //print_scores();
     free_board();
 }
 
@@ -351,8 +352,7 @@ void get_flags(int argc, char * argv[]) {
 
 int main (int argc, char * argv[]) {
 
-    clock_t start = clock();//time start
-    double dif;
+    clock_t start = clock(), dif;//time start
     int ncores = sysconf(_SC_NPROCESSORS_ONLN);
     get_flags(argc, argv);
     // argc -= optind;
@@ -389,7 +389,8 @@ int main (int argc, char * argv[]) {
     if (measure_time) {
         clock_t end = clock();
         dif =  end - start;
-        printf ("Time elapsed: %lf ms \n", dif );
+        int msec = dif * 1000 / CLOCKS_PER_SEC;
+        printf("Time taken %d seconds %d milliseconds\n", msec/1000, msec%1000);
     }
 }
 
