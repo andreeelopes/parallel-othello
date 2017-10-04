@@ -45,9 +45,15 @@ typedef struct {
 } move;
 
 typedef struct {
-    double serial_time;
-    double parallel_time;
-};
+    clock_t parallel_time;
+    clock_t serial_time;
+    clock_t total_time;
+    // double speedup; // S(p) = T1/Tp
+    // double efficiency;//E(p) = Sp/p
+    // double cost;// Cost(p) = p * Tp
+} timing_stats;
+
+timing_stats stats;
 
 char print_mode = 'n';
 int anim_mode = 0;
@@ -262,7 +268,7 @@ void get_move(move* m) {
 int make_move(char color) {
 
     move best_moves [board_size];
-
+    clock_t parallel_start = clock();
     cilk_for (int i = 0; i < board_size; i++) {
         move m;
         best_moves[i].heuristic = 0;
@@ -275,6 +281,9 @@ int make_move(char color) {
             }
         }
     }
+
+    clock_t parallel_end = clock();
+    stats.parallel_time += (parallel_end - parallel_start);
 
     move best_move;
     int max = -1;
@@ -389,8 +398,22 @@ int main (int argc, char * argv[]) {
     if (measure_time) {
         clock_t end = clock();
         dif =  end - start;
-        int msec = dif * 1000 / CLOCKS_PER_SEC;
-        printf("Time taken %d seconds %d milliseconds\n", msec/1000, msec%1000);
+        int total_time = dif * 1000 / CLOCKS_PER_SEC;
+        int parallel_time = stats.parallel_time * 1000 / CLOCKS_PER_SEC;
+        printf("Total Time: %d seconds %d milliseconds\n", total_time / 1000, total_time % 1000);
+
+        int p_ms = parallel_time;//parallel
+        int t_ms = total_time;//total
+        int s_ms = t_ms - p_ms; //serial
+        printf("p_ms: %d\n", p_ms);
+        printf("t_ms: %d\n", t_ms);
+        printf("s_ms: %d\n", s_ms);
+        double p_work = p_ms * 100 / (double)t_ms;
+        double s_work = s_ms * 100 / (double)t_ms;
+
+        printf("Parallel Work: %.2lf%%\n", p_work);
+        printf("Serial Work: %.2lf%%\n", s_work);
+
     }
 }
 
