@@ -12,9 +12,7 @@
 #include <pthread.h>
 #include <cilk/cilk.h>
 #include <cilk/cilk_api.h>
-#include <time.h>
-#include <unistd.h>
-
+#include <sys/time.h>
 
 #define RED     "\x1B[31m"
 #define BLU     "\x1B[34m"
@@ -44,17 +42,7 @@ typedef struct {
     int heuristic;
 } move;
 
-typedef struct {
-    clock_t parallel_time;
-    clock_t serial_time;
-    clock_t total_time;
-    // double speedup; // S(p) = T1/Tp
-    // double efficiency;//E(p) = Sp/p
-    // double cost;// Cost(p) = p * Tp
-} timing_stats;
-
-timing_stats stats;
-
+long parallel_time = 0;
 char print_mode = 'n';
 int anim_mode = 0;
 int board_size = 8;
@@ -64,10 +52,13 @@ int measure_time = 0;
 
 char** board;
 
-void init_stats() {
-    stats.parallel_time = 0;
-    stats.serial_time = 0;
-    stats.total_time = 0;
+
+long timeElapsed (struct timeval start, struct timeval end) {
+  long secs_used,micros_used;
+
+  secs_used = (end.tv_sec - start.tv_sec); //avoid overflow by subtracting first
+  micros_used = ((secs_used*1000000) + end.tv_usec) - (start.tv_usec);
+  return micros_used;
 }
 
 void init_board() {
@@ -271,9 +262,10 @@ void get_move(move* m) {
 
 //PLEASE PARALELIZE THIS FUNCTION
 int make_move(char color) {
+    struct timeval parallel_start, parallel_end;
 
     move best_moves [board_size];
-    clock_t parallel_start = clock();
+    gettimeofday(&parallel_start, NULL);
     cilk_for (int i = 0; i < board_size; i++) {
         move m;
         best_moves[i].heuristic = 0;
@@ -286,9 +278,8 @@ int make_move(char color) {
             }
         }
     }
-
-    clock_t parallel_end = clock();
-    stats.parallel_time += (parallel_end - parallel_start);
+    gettimeofday(&parallel_end, NULL);
+    parallel_time += timeElapsed(parallel_start, parallel_end);
 
     move best_move;
     int max = -1;
@@ -366,12 +357,16 @@ void get_flags(int argc, char * argv[]) {
 
 int main (int argc, char * argv[]) {
 
-    clock_t start = clock(), dif;//time start
-    int ncores = sysconf(_SC_NPROCESSORS_ONLN);
+    struct timeval start, end;
+    long total_time;
+
+    if (measure_time)
+        gettimeofday(&start, NULL);
+
+    //int ncores = sysconf(_SC_NPROCESSORS_ONLN);
     get_flags(argc, argv);
     // argc -= optind;
     // argv += optind;
-    init_stats();
     init_board();
     int cant_move_r = FALSE, cant_move_b = FALSE;
     char turn = R;
@@ -401,20 +396,15 @@ int main (int argc, char * argv[]) {
     //printf("Number of Cores:%d\n", ncores );
 
     if (measure_time) {
-        clock_t end = clock();
-        dif =  end - start;
-        int total_time = dif * 1000 / CLOCKS_PER_SEC;
-        int parallel_time = stats.parallel_time * 1000 / CLOCKS_PER_SEC;
-        printf("Total Time: %d seconds %d milliseconds\n", total_time / 1000, total_time % 1000);
+        gettimeofday(&end, NULL);
+        total_time = timeElapsed(start, end); //micros
 
-        int p_ms = parallel_time;//parallel
-        int t_ms = total_time;//total
-        int s_ms = t_ms - p_ms; //serial
-        //printf("p_ms: %d\n", p_ms);
-        //printf("t_ms: %d\n", t_ms);
-        //printf("s_ms: %d\n", s_ms);
-        double p_work = p_ms * 100 / (double)t_ms;
-        double s_work = s_ms * 100 / (double)t_ms;
+        printf ("Total Time = %6.3lf seconds!\n", total_time/1000000.0 );
+
+        long serial_time = total_time - parallel_time; //micros
+
+        double p_work = parallel_time * 100 / (double)total_time;
+        double s_work = serial_time * 100 / (double)total_time;
 
         printf("Parallel Work: %.2lf%%\n", p_work);
         printf("Serial Work: %.2lf%%\n", s_work);
