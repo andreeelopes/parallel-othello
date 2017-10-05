@@ -64,6 +64,11 @@ int measure_time = 0;
 
 char** board;
 
+void init_stats() {
+    stats.parallel_time = 0;
+    stats.serial_time = 0;
+    stats.total_time = 0;
+}
 
 void init_board() {
     board = malloc(board_size * sizeof(char*));
@@ -366,7 +371,7 @@ int main (int argc, char * argv[]) {
     get_flags(argc, argv);
     // argc -= optind;
     // argv += optind;
-
+    init_stats();
     init_board();
     int cant_move_r = FALSE, cant_move_b = FALSE;
     char turn = R;
@@ -405,9 +410,9 @@ int main (int argc, char * argv[]) {
         int p_ms = parallel_time;//parallel
         int t_ms = total_time;//total
         int s_ms = t_ms - p_ms; //serial
-        printf("p_ms: %d\n", p_ms);
-        printf("t_ms: %d\n", t_ms);
-        printf("s_ms: %d\n", s_ms);
+        //printf("p_ms: %d\n", p_ms);
+        //printf("t_ms: %d\n", t_ms);
+        //printf("s_ms: %d\n", s_ms);
         double p_work = p_ms * 100 / (double)t_ms;
         double s_work = s_ms * 100 / (double)t_ms;
 
