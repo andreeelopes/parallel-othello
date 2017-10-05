@@ -42,7 +42,7 @@ typedef struct {
     int heuristic;
 } move;
 
-long parallel_time = 0;
+double parallel_time = 0.0;
 char print_mode = 'n';
 int anim_mode = 0;
 int board_size = 8;
@@ -52,13 +52,9 @@ int measure_time = 0;
 
 char** board;
 
-
-long timeElapsed (struct timeval start, struct timeval end) {
-  long secs_used,micros_used;
-
-  secs_used = (end.tv_sec - start.tv_sec); //avoid overflow by subtracting first
-  micros_used = ((secs_used*1000000) + end.tv_usec) - (start.tv_usec);
-  return micros_used;
+//returns time in micro seconds
+double time_elapsed (struct timeval start, struct timeval end) {
+    return (end.tv_sec - start.tv_sec) * 1000000.0 + end.tv_usec - start.tv_usec;
 }
 
 void init_board() {
@@ -262,10 +258,12 @@ void get_move(move* m) {
 
 //PLEASE PARALELIZE THIS FUNCTION
 int make_move(char color) {
-    struct timeval parallel_start, parallel_end;
 
     move best_moves [board_size];
+
+    struct timeval parallel_start, parallel_end;
     gettimeofday(&parallel_start, NULL);
+
     cilk_for (int i = 0; i < board_size; i++) {
         move m;
         best_moves[i].heuristic = 0;
@@ -279,8 +277,7 @@ int make_move(char color) {
         }
     }
     gettimeofday(&parallel_end, NULL);
-    parallel_time += timeElapsed(parallel_start, parallel_end);
-
+    parallel_time += time_elapsed(parallel_start, parallel_end);
     move best_move;
     int max = -1;
     for (int i = 0; i < board_size; i++)
@@ -353,20 +350,20 @@ void get_flags(int argc, char * argv[]) {
     }
 }
 
+double micro_to_seconds(double micro) {
+    return micro / 1000000.0;
+}
 
 
 int main (int argc, char * argv[]) {
 
     struct timeval start, end;
-    long total_time;
-
-    if (measure_time)
-        gettimeofday(&start, NULL);
 
     //int ncores = sysconf(_SC_NPROCESSORS_ONLN);
     get_flags(argc, argv);
-    // argc -= optind;
-    // argv += optind;
+    if (measure_time) {
+        gettimeofday(&start, NULL);
+    }
     init_board();
     int cant_move_r = FALSE, cant_move_b = FALSE;
     char turn = R;
@@ -394,20 +391,28 @@ int main (int argc, char * argv[]) {
     finish_game();
 
     //printf("Number of Cores:%d\n", ncores );
-
     if (measure_time) {
         gettimeofday(&end, NULL);
-        total_time = timeElapsed(start, end); //micros
 
-        printf ("Total Time = %6.3lf seconds!\n", total_time/1000000.0 );
+        double total_time = time_elapsed(start, end);
+        double serial_time = total_time - parallel_time; //micro seconds
 
-        long serial_time = total_time - parallel_time; //micros
+        double p_work = parallel_time * 100 / total_time;
+        double s_work = serial_time * 100 / total_time;
 
-        double p_work = parallel_time * 100 / (double)total_time;
-        double s_work = serial_time * 100 / (double)total_time;
+        printf("Total Time (micro)    = %lf\n", total_time); //micro
+        printf("Serial Time (micro)   = %lf\n", serial_time); //micro
+        printf("Parallel Time (micro) = %lf\n", parallel_time); //micro
+        printf("---------------------------------------------\n");
+        printf("Total Time (sec)    = %6.3lf\n", micro_to_seconds(total_time)); //seconds
+        printf("Serial Time (sec)   = %6.3lf\n", micro_to_seconds(serial_time)); //seconds
+        printf("Parallel Time (sec) = %6.3lf\n", micro_to_seconds(parallel_time)); //seconds
+        printf("---------------------------------------------\n");
+        printf("Serial Work:   %0.3lf%%\n", s_work);
+        printf("Parallel Work: %0.3lf%%\n", p_work);
 
-        printf("Parallel Work: %.2lf%%\n", p_work);
-        printf("Serial Work: %.2lf%%\n", s_work);
+        printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
+
 
     }
 }
