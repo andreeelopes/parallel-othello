@@ -45,29 +45,29 @@ typedef struct {
 double parallel_time = 0.0;
 char print_mode = 'n';
 int anim_mode = 0;
-int board_size = 8;
+int BOARD_size = 8;
 int delay = 0;
-int threads = 1;
+int THREADS = 1;
 int measure_time = 0;
 
-char** board;
+char** BOARD;
 
 //returns time in micro seconds
 double time_elapsed (struct timeval start, struct timeval end) {
     return (end.tv_sec - start.tv_sec) * 1000000.0 + end.tv_usec - start.tv_usec;
 }
 
-void init_board() {
-    board = malloc(board_size * sizeof(char*));
-    for (int i = 0; i < board_size; i++) {
-        board[i] = malloc(board_size * sizeof(char));
-        for (int j = 0; j < board_size; j++)
-            board[i][j] = E;
+void init_BOARD() {
+    BOARD = malloc(BOARD_size * sizeof(char*));
+    for (int i = 0; i < BOARD_size; i++) {
+        BOARD[i] = malloc(BOARD_size * sizeof(char));
+        for (int j = 0; j < BOARD_size; j++)
+            BOARD[i][j] = E;
     }
-    board[board_size / 2 - 1][board_size / 2 - 1] = R;
-    board[board_size / 2][board_size / 2 - 1] = B;
-    board[board_size / 2 - 1][board_size / 2] = B;
-    board[board_size / 2][board_size / 2] = R;
+    BOARD[BOARD_size / 2 - 1][BOARD_size / 2 - 1] = R;
+    BOARD[BOARD_size / 2][BOARD_size / 2 - 1] = B;
+    BOARD[BOARD_size / 2 - 1][BOARD_size / 2] = B;
+    BOARD[BOARD_size / 2][BOARD_size / 2] = R;
 }
 
 void init_move(move* m, int i, int j, char color) {
@@ -86,7 +86,7 @@ void init_move(move* m, int i, int j, char color) {
 }
 
 int valid_move(int i, int j) {
-    if (i >= 0 && i < board_size && j >= 0 && j < board_size)
+    if (i >= 0 && i < BOARD_size && j >= 0 && j < BOARD_size)
         return TRUE;
     else
         return FALSE;
@@ -104,24 +104,24 @@ char opponent(char turn) {
 int score(char color)
 {
     int res = 0;
-    for (int i = 0; i < board_size; i++) {
-        for (int j = 0; j < board_size; j++) {
-            if (board[i][j] == color)
+    for (int i = 0; i < BOARD_size; i++) {
+        for (int j = 0; j < BOARD_size; j++) {
+            if (BOARD[i][j] == color)
                 res++;
         }
     }
     return res;
 }
 
-void print_board() {
+void print_BOARD() {
     if (print_mode == 's')
         return;
     if (anim_mode) {
         printf(TOPLEFT);
     }
-    for (int i = 0; i < board_size; i++) {
-        for (int j = 0; j < board_size; j++) {
-            const char c = board[i][j];
+    for (int i = 0; i < BOARD_size; i++) {
+        for (int j = 0; j < BOARD_size; j++) {
+            const char c = BOARD[i][j];
             if (print_mode == 'n')
                 printf("%c ", c);
             else if (print_mode == 'c') {
@@ -135,7 +135,7 @@ void print_board() {
         }
         printf("\n");
     }
-    for (int i = 0; i < 2 * board_size; i++)
+    for (int i = 0; i < 2 * BOARD_size; i++)
         printf("=");
     printf("\n");
 }
@@ -146,30 +146,30 @@ void print_scores() {
     printf("score - red:%i blue:%i\n", w, b);
 }
 
-void free_board() {
-    for (int i = 0; i < board_size; i++)
-        free(board[i]);
-    free(board);
+void free_BOARD() {
+    for (int i = 0; i < BOARD_size; i++)
+        free(BOARD[i]);
+    free(BOARD);
 }
 
 void finish_game() {
-    //print_board();
+    //print_BOARD();
     //print_scores();
-    free_board();
+    free_BOARD();
 }
 
 void flip_direction (move* m, int inc_i, int inc_j) {
     int i = m->i + inc_i;
     int j = m->j + inc_j;
-    while (board[i][j] != m->color) {
-        board[i][j] = m->color;
+    while (BOARD[i][j] != m->color) {
+        BOARD[i][j] = m->color;
         i += inc_i;
         j += inc_j;
     }
 }
 
-void flip_board(move* m) {
-    board[m->i][m->j] = m->color;
+void flip_BOARD(move* m) {
+    BOARD[m->i][m->j] = m->color;
     if (m->right)
         flip_direction(m, 1, 0); //right
     if (m->left)
@@ -195,7 +195,7 @@ int get_direction_heuristic(move* m, char opp, int inc_i, int inc_j) {
     char curr = opp;
 
     while (valid_move(i, j)) {
-        curr = board[i][j];
+        curr = BOARD[i][j];
         if (curr != opp)
             break;
         heuristic++;
@@ -209,7 +209,7 @@ int get_direction_heuristic(move* m, char opp, int inc_i, int inc_j) {
 }
 
 void get_move(move* m) {
-    if (board[m->i][m->j] != E)
+    if (BOARD[m->i][m->j] != E)
         return;
     char opp = opponent(m->color);
     int heuristic;
@@ -259,16 +259,16 @@ void get_move(move* m) {
 //PLEASE PARALELIZE THIS FUNCTION
 int make_move(char color) {
 
-    move best_moves [board_size];
+    move best_moves [BOARD_size];
 
     struct timeval parallel_start, parallel_end;
     gettimeofday(&parallel_start, NULL);
 
-    cilk_for (int i = 0; i < board_size; i++) {
+    cilk_for (int i = 0; i < BOARD_size; i++) {
         move m;
         best_moves[i].heuristic = 0;
 
-        for (int j = 0; j < board_size; j++) {
+        for (int j = 0; j < BOARD_size; j++) {
             init_move(&m, i, j, color);
             get_move(&m);
             if (m.heuristic > best_moves[i].heuristic) {
@@ -280,14 +280,14 @@ int make_move(char color) {
     parallel_time += time_elapsed(parallel_start, parallel_end);
     move best_move;
     int max = -1;
-    for (int i = 0; i < board_size; i++)
+    for (int i = 0; i < BOARD_size; i++)
         if (best_moves[i].heuristic > max) {
             max = best_moves[i].heuristic;
             best_move = best_moves[i];
         }
 
     if (best_move.heuristic > 0) {
-        flip_board(&best_move);
+        flip_BOARD(&best_move);
         return TRUE;    //made a move
     } else
         return FALSE;   //no move to make
@@ -321,23 +321,24 @@ void get_flags(int argc, char * argv[]) {
             }
             break;
         case 'b':
-            board_size = atoi(optarg);
-            if (board_size < 4) {
-                printf("Minimum board size is 4.\n");
+            BOARD_size = atoi(optarg);
+            if (BOARD_size < 4) {
+                printf("Minimum BOARD size is 4.\n");
                 help(argv[0]);
             }
             break;
         case 'n':
-            threads = atoi(optarg);
-            if (threads < 1) {
-                printf("Minimum threads is 1.\n");
+            THREADS = atoi(optarg);
+            if (THREADS < 1) {
+                printf("Minimum THREADS is 1.\n");
                 help(argv[0]);
             }
             else {
                 char str[13];
-                sprintf(str, "%d", threads);
-                //printf("number of threads: %s\n", str);
-                __cilkrts_set_param("nworkers", "str");
+                sprintf(str, "%d", THREADS);
+                __cilkrts_end_cilk();
+                __cilkrts_set_param("nworkers", str);
+                printf("> WORKERS = %d\n", __cilkrts_get_nworkers());
             }
             break;
         case 't':
@@ -364,7 +365,7 @@ int main (int argc, char * argv[]) {
     if (measure_time) {
         gettimeofday(&start, NULL);
     }
-    init_board();
+    init_BOARD();
     int cant_move_r = FALSE, cant_move_b = FALSE;
     char turn = R;
 
@@ -372,7 +373,7 @@ int main (int argc, char * argv[]) {
         printf(CLEAR);
     }
     while (!cant_move_r && !cant_move_b) {
-        print_board();
+        print_BOARD();
         int cant_move = !make_move(turn);
         if (cant_move) {
             if (turn == R)
