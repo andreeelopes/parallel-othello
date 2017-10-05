@@ -1,0 +1,368 @@
+threads = 1 | 10 times | board = 10
+Total Time: 0 seconds 115 milliseconds
+Parallel Work: 53.91%
+Serial Work: 46.09%
+Total Time: 0 seconds 63 milliseconds
+Parallel Work: 57.14%
+Serial Work: 42.86%
+Total Time: 0 seconds 167 milliseconds
+Parallel Work: 72.46%
+Serial Work: 27.54%
+Total Time: 0 seconds 66 milliseconds
+Parallel Work: 53.03%
+Serial Work: 46.97%
+Total Time: 0 seconds 184 milliseconds
+Parallel Work: 66.30%
+Serial Work: 33.70%
+Total Time: 0 seconds 177 milliseconds
+Parallel Work: 55.93%
+Serial Work: 44.07%
+Total Time: 0 seconds 60 milliseconds
+Parallel Work: 41.67%
+Serial Work: 58.33%
+Total Time: 0 seconds 53 milliseconds
+Parallel Work: 41.51%
+Serial Work: 58.49%
+Total Time: 0 seconds 86 milliseconds
+Parallel Work: 46.51%
+Serial Work: 53.49%
+Total Time: 0 seconds 71 milliseconds
+Parallel Work: 45.07%
+Serial Work: 54.93%
+
+threads = 2 | 10 times | board = 10
+Total Time: 0 seconds 85 milliseconds
+Parallel Work: 44.71%
+Serial Work: 55.29%
+Total Time: 0 seconds 118 milliseconds
+Parallel Work: 49.15%
+Serial Work: 50.85%
+Total Time: 0 seconds 158 milliseconds
+Parallel Work: 69.62%
+Serial Work: 30.38%
+Total Time: 0 seconds 85 milliseconds
+Parallel Work: 44.71%
+Serial Work: 55.29%
+Total Time: 0 seconds 184 milliseconds
+Parallel Work: 82.61%
+Serial Work: 17.39%
+Total Time: 0 seconds 55 milliseconds
+Parallel Work: 38.18%
+Serial Work: 61.82%
+Total Time: 0 seconds 64 milliseconds
+Parallel Work: 43.75%
+Serial Work: 56.25%
+Total Time: 0 seconds 46 milliseconds
+Parallel Work: 50.00%
+Serial Work: 50.00%
+Total Time: 0 seconds 45 milliseconds
+Parallel Work: 42.22%
+Serial Work: 57.78%
+Total Time: 0 seconds 65 milliseconds
+Parallel Work: 43.08%
+Serial Work: 56.92%
+
+threads = 1 | 10 times | board = 100
+Total Time: 32 seconds 912 milliseconds
+Parallel Work: 77.30%
+Serial Work: 22.70%
+Total Time: 34 seconds 614 milliseconds
+Parallel Work: 75.24%
+Serial Work: 24.76%
+Total Time: 30 seconds 529 milliseconds
+Parallel Work: 79.07%
+Serial Work: 20.93%
+Total Time: 35 seconds 580 milliseconds
+Parallel Work: 72.11%
+Serial Work: 27.89%
+Total Time: 30 seconds 528 milliseconds
+Parallel Work: 85.53%
+Serial Work: 14.47%
+Total Time: 32 seconds 696 milliseconds
+Parallel Work: 72.62%
+Serial Work: 27.38%
+Total Time: 34 seconds 225 milliseconds
+Parallel Work: 72.89%
+Serial Work: 27.11%
+Total Time: 32 seconds 437 milliseconds
+Parallel Work: 78.43%
+Serial Work: 21.57%
+Total Time: 32 seconds 0 milliseconds
+Parallel Work: 83.40%
+Serial Work: 16.60%
+Total Time: 30 seconds 212 milliseconds
+Parallel Work: 87.26%
+Serial Work: 12.74%
+
+threads = 2 | 10 times | board = 100
+Total Time: 29 seconds 496 milliseconds
+Parallel Work: 82.38%
+Serial Work: 17.62%
+Total Time: 31 seconds 425 milliseconds
+Parallel Work: 81.86%
+Serial Work: 18.14%
+Total Time: 32 seconds 845 milliseconds
+Parallel Work: 75.92%
+Serial Work: 24.08%
+Total Time: 32 seconds 33 milliseconds
+Parallel Work: 73.99%
+Serial Work: 26.01%
+Total Time: 31 seconds 811 milliseconds
+Parallel Work: 78.60%
+Serial Work: 21.40%
+Total Time: 31 seconds 100 milliseconds
+Parallel Work: 84.39%
+Serial Work: 15.61%
+Total Time: 31 seconds 590 milliseconds
+Parallel Work: 76.70%
+Serial Work: 23.30%
+Total Time: 29 seconds 962 milliseconds
+Parallel Work: 88.66%
+Serial Work: 11.34%
+Total Time: 33 seconds 70 milliseconds
+Parallel Work: 80.50%
+Serial Work: 19.50%
+Total Time: 32 seconds 309 milliseconds
+Parallel Work: 75.59%
+Serial Work: 24.41%
+
+threads = 4 | 10 times | board = 100
+Total Time: 32 seconds 688 milliseconds
+Parallel Work: 78.04%
+Serial Work: 21.96%
+Total Time: 30 seconds 315 milliseconds
+Parallel Work: 88.64%
+Serial Work: 11.36%
+Total Time: 31 seconds 464 milliseconds
+Parallel Work: 79.87%
+Serial Work: 20.13%
+Total Time: 30 seconds 750 milliseconds
+Parallel Work: 84.20%
+Serial Work: 15.80%
+Total Time: 29 seconds 74 milliseconds
+Parallel Work: 90.39%
+Serial Work: 9.61%
+Total Time: 32 seconds 595 milliseconds
+Parallel Work: 75.82%
+Serial Work: 24.18%
+Total Time: 29 seconds 194 milliseconds
+Parallel Work: 88.05%
+Serial Work: 11.95%
+Total Time: 30 seconds 558 milliseconds
+Parallel Work: 83.59%
+Serial Work: 16.41%
+Total Time: 32 seconds 854 milliseconds
+Parallel Work: 79.73%
+Serial Work: 20.27%
+Total Time: 30 seconds 806 milliseconds
+Parallel Work: 83.80%
+Serial Work: 16.20%
+
+threads = 6 | 10 times | board = 100
+Total Time: 31 seconds 430 milliseconds
+Parallel Work: 85.37%
+Serial Work: 14.63%
+Total Time: 31 seconds 627 milliseconds
+Parallel Work: 76.95%
+Serial Work: 23.05%
+Total Time: 33 seconds 471 milliseconds
+Parallel Work: 76.41%
+Serial Work: 23.59%
+Total Time: 31 seconds 664 milliseconds
+Parallel Work: 79.47%
+Serial Work: 20.53%
+Total Time: 33 seconds 601 milliseconds
+Parallel Work: 76.51%
+Serial Work: 23.49%
+Total Time: 29 seconds 937 milliseconds
+Parallel Work: 87.62%
+Serial Work: 12.38%
+Total Time: 34 seconds 864 milliseconds
+Parallel Work: 72.28%
+Serial Work: 27.72%
+Total Time: 33 seconds 593 milliseconds
+Parallel Work: 72.93%
+Serial Work: 27.07%
+Total Time: 32 seconds 571 milliseconds
+Parallel Work: 80.12%
+Serial Work: 19.88%
+Total Time: 34 seconds 545 milliseconds
+Parallel Work: 70.79%
+Serial Work: 29.21%
+
+threads = 8 | 10 times | board = 100
+Total Time: 35 seconds 652 milliseconds
+Parallel Work: 72.75%
+Serial Work: 27.25%
+Total Time: 31 seconds 994 milliseconds
+Parallel Work: 78.55%
+Serial Work: 21.45%
+Total Time: 33 seconds 753 milliseconds
+Parallel Work: 76.83%
+Serial Work: 23.17%
+Total Time: 30 seconds 517 milliseconds
+Parallel Work: 81.79%
+Serial Work: 18.21%
+Total Time: 32 seconds 170 milliseconds
+Parallel Work: 79.14%
+Serial Work: 20.86%
+Total Time: 29 seconds 264 milliseconds
+Parallel Work: 89.17%
+Serial Work: 10.83%
+Total Time: 30 seconds 642 milliseconds
+Parallel Work: 85.38%
+Serial Work: 14.62%
+Total Time: 30 seconds 9 milliseconds
+Parallel Work: 88.88%
+Serial Work: 11.12%
+Total Time: 30 seconds 913 milliseconds
+Parallel Work: 83.98%
+Serial Work: 16.02%
+Total Time: 32 seconds 530 milliseconds
+Parallel Work: 74.97%
+Serial Work: 25.03%
+
+threads = 10 | 10 times | board = 100
+Total Time: 34 seconds 831 milliseconds
+Parallel Work: 73.56%
+Serial Work: 26.44%
+Total Time: 30 seconds 655 milliseconds
+Parallel Work: 82.15%
+Serial Work: 17.85%
+Total Time: 29 seconds 885 milliseconds
+Parallel Work: 87.08%
+Serial Work: 12.92%
+Total Time: 32 seconds 542 milliseconds
+Parallel Work: 80.68%
+Serial Work: 19.32%
+Total Time: 30 seconds 177 milliseconds
+Parallel Work: 81.82%
+Serial Work: 18.18%
+Total Time: 29 seconds 393 milliseconds
+Parallel Work: 86.63%
+Serial Work: 13.37%
+Total Time: 33 seconds 179 milliseconds
+Parallel Work: 79.43%
+Serial Work: 20.57%
+Total Time: 32 seconds 949 milliseconds
+Parallel Work: 78.54%
+Serial Work: 21.46%
+Total Time: 30 seconds 98 milliseconds
+Parallel Work: 86.09%
+Serial Work: 13.91%
+Total Time: 33 seconds 852 milliseconds
+Parallel Work: 77.72%
+Serial Work: 22.28%
+
+threads = 12 | 10 times | board = 100
+Total Time: 32 seconds 806 milliseconds
+Parallel Work: 79.01%
+Serial Work: 20.99%
+Total Time: 28 seconds 874 milliseconds
+Parallel Work: 89.26%
+Serial Work: 10.74%
+Total Time: 31 seconds 980 milliseconds
+Parallel Work: 81.92%
+Serial Work: 18.08%
+Total Time: 33 seconds 392 milliseconds
+Parallel Work: 72.21%
+Serial Work: 27.79%
+Total Time: 34 seconds 234 milliseconds
+Parallel Work: 70.47%
+Serial Work: 29.53%
+Total Time: 30 seconds 73 milliseconds
+Parallel Work: 90.38%
+Serial Work: 9.62%
+Total Time: 33 seconds 860 milliseconds
+Parallel Work: 73.66%
+Serial Work: 26.34%
+Total Time: 31 seconds 314 milliseconds
+Parallel Work: 80.70%
+Serial Work: 19.30%
+Total Time: 31 seconds 983 milliseconds
+Parallel Work: 78.69%
+Serial Work: 21.31%
+Total Time: 32 seconds 186 milliseconds
+Parallel Work: 81.32%
+Serial Work: 18.68%
+
+threads = 14 | 10 times | board = 100
+Total Time: 35 seconds 347 milliseconds
+Parallel Work: 73.43%
+Serial Work: 26.57%
+Total Time: 32 seconds 814 milliseconds
+Parallel Work: 75.84%
+Serial Work: 24.16%
+Total Time: 28 seconds 831 milliseconds
+Parallel Work: 89.46%
+Serial Work: 10.54%
+Total Time: 30 seconds 540 milliseconds
+Parallel Work: 86.92%
+Serial Work: 13.08%
+Total Time: 31 seconds 31 milliseconds
+Parallel Work: 85.76%
+Serial Work: 14.24%
+Total Time: 30 seconds 53 milliseconds
+Parallel Work: 82.80%
+Serial Work: 17.20%
+Total Time: 34 seconds 349 milliseconds
+Parallel Work: 71.70%
+Serial Work: 28.30%
+Total Time: 32 seconds 652 milliseconds
+Parallel Work: 82.82%
+Serial Work: 17.18%
+Total Time: 31 seconds 481 milliseconds
+Parallel Work: 80.45%
+Serial Work: 19.55%
+Total Time: 31 seconds 764 milliseconds
+Parallel Work: 77.23%
+Serial Work: 22.77%
+
+threads = 16 | 10 times | board = 100
+Total Time: 32 seconds 843 milliseconds
+Parallel Work: 76.43%
+Serial Work: 23.57%
+Total Time: 32 seconds 413 milliseconds
+Parallel Work: 78.15%
+Serial Work: 21.85%
+Total Time: 35 seconds 53 milliseconds
+Parallel Work: 70.48%
+Serial Work: 29.52%
+Total Time: 30 seconds 424 milliseconds
+Parallel Work: 81.09%
+Serial Work: 18.91%
+Total Time: 34 seconds 217 milliseconds
+Parallel Work: 72.05%
+Serial Work: 27.95%
+Total Time: 33 seconds 544 milliseconds
+Parallel Work: 74.67%
+Serial Work: 25.33%
+Total Time: 35 seconds 857 milliseconds
+Parallel Work: 70.77%
+Serial Work: 29.23%
+Total Time: 35 seconds 765 milliseconds
+Parallel Work: 70.04%
+Serial Work: 29.96%
+Total Time: 34 seconds 697 milliseconds
+Parallel Work: 71.65%
+Serial Work: 28.35%
+Total Time: 31 seconds 49 milliseconds
+Parallel Work: 82.49%
+Serial Work: 17.51%
+
+threads = 1 | 10 times | board = 200
+Total Time: 301 seconds 934 milliseconds
+Parallel Work: 91.05%
+Serial Work: 8.95%
+Total Time: 295 seconds 995 milliseconds
+Parallel Work: 91.76%
+Serial Work: 8.24%
+Total Time: 297 seconds 107 milliseconds
+Parallel Work: 91.78%
+Serial Work: 8.22%
+Total Time: 298 seconds 813 milliseconds
+Parallel Work: 92.93%
+Serial Work: 7.07%
+Total Time: 298 seconds 163 milliseconds
+Parallel Work: 91.24%
+Serial Work: 8.76%
