@@ -338,7 +338,7 @@ void get_flags(int argc, char * argv[]) {
                 sprintf(str, "%d", THREADS);
                 __cilkrts_end_cilk();
                 __cilkrts_set_param("nworkers", str);
-                printf("> WORKERS = %d\n", __cilkrts_get_nworkers());
+                //printf("> WORKERS = %d\n", __cilkrts_get_nworkers());
             }
             break;
         case 't':
@@ -401,18 +401,30 @@ int main (int argc, char * argv[]) {
         double p_work = parallel_time * 100 / total_time;
         double s_work = serial_time * 100 / total_time;
 
-        printf("Total Time (micro)    = %lf\n", total_time); //micro
-        printf("Serial Time (micro)   = %lf\n", serial_time); //micro
-        printf("Parallel Time (micro) = %lf\n", parallel_time); //micro
-        printf("---------------------------------------------\n");
-        printf("Total Time (sec)    = %6.3lf\n", micro_to_seconds(total_time)); //seconds
-        printf("Serial Time (sec)   = %6.3lf\n", micro_to_seconds(serial_time)); //seconds
-        printf("Parallel Time (sec) = %6.3lf\n", micro_to_seconds(parallel_time)); //seconds
-        printf("---------------------------------------------\n");
-        printf("Serial Work:   %0.3lf%%\n", s_work);
-        printf("Parallel Work: %0.3lf%%\n", p_work);
+        printf("%lf\n", total_time); //micro
+        printf("%lf\n", serial_time); //micro
+        printf("%lf\n\n", parallel_time); //micro
+        printf("%6.3lf\n", micro_to_seconds(total_time)); //seconds
+        printf("%6.3lf\n", micro_to_seconds(serial_time)); //seconds
+        printf("%6.3lf\n\n", micro_to_seconds(parallel_time)); //seconds
+        printf("%0.3lf\n", s_work);
+        printf("%0.3lf\n", p_work);
 
         printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
+
+
+        // printf("Total Time (micro)    = %lf\n", total_time); //micro
+        // printf("Serial Time (micro)   = %lf\n", serial_time); //micro
+        // printf("Parallel Time (micro) = %lf\n", parallel_time); //micro
+        // printf("---------------------------------------------\n");
+        // printf("Total Time (sec)    = %6.3lf\n", micro_to_seconds(total_time)); //seconds
+        // printf("Serial Time (sec)   = %6.3lf\n", micro_to_seconds(serial_time)); //seconds
+        // printf("Parallel Time (sec) = %6.3lf\n", micro_to_seconds(parallel_time)); //seconds
+        // printf("---------------------------------------------\n");
+        // printf("Serial Work:   %0.3lf%%\n", s_work);
+        // printf("Parallel Work: %0.3lf%%\n", p_work);
+
+        // printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
 
 
     }
