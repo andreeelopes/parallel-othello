@@ -400,17 +400,18 @@ int main (int argc, char * argv[]) {
 
         double p_work = parallel_time * 100 / total_time;
         double s_work = serial_time * 100 / total_time;
-
+        /*
         printf("%lf\n", total_time); //micro
         printf("%lf\n", serial_time); //micro
         printf("%lf\n\n", parallel_time); //micro
-        printf("%6.3lf\n", micro_to_seconds(total_time)); //seconds
-        printf("%6.3lf\n", micro_to_seconds(serial_time)); //seconds
-        printf("%6.3lf\n\n", micro_to_seconds(parallel_time)); //seconds
+        */
+        printf("%0.3lf\n", micro_to_seconds(total_time)); //seconds
+        printf("%0.3lf\n", micro_to_seconds(serial_time)); //seconds
+        printf("%0.3lf\n", micro_to_seconds(parallel_time)); //seconds
         printf("%0.3lf\n", s_work);
         printf("%0.3lf\n", p_work);
 
-        printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
+        printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
 
 
         // printf("Total Time (micro)    = %lf\n", total_time); //micro
