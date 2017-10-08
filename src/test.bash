@@ -75,7 +75,7 @@ echo "board = 150"
 echo "THREADS = 1 | 10 TIMES | BOARD = 150" > res_150.txt
 seq 10 | xargs -Iz ./othello -c -t -b 150 -s -n 1 >> res_150.txt
 echo "THREADS = 2 | 10 TIMES | BOARD = 150" >> res_150.txt
-seq 10 | xargs -Iz ./othello -c -t -b 150 -s -n 2 |tee -a res_150.txt
+seq 10 | xargs -Iz ./othello -c -t -b 150 -s -n 2 >> res_150.txt
 echo "THREADS = 4 | 10 TIMES | BOARD = 150" >> res_150.txt
 seq 10 | xargs -Iz ./othello -c -t -b 150 -s -n 4 >> res_150.txt
 echo "THREADS = 6 | 10 TIMES | BOARD = 150" >> res_150.txt
