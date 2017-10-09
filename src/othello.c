@@ -49,12 +49,18 @@ int BOARD_size = 8;
 int delay = 0;
 int THREADS = 1;
 int measure_time = 0;
+struct timeval start, end;
+
 
 char** BOARD;
 
 //returns time in micro seconds
 double time_elapsed (struct timeval start, struct timeval end) {
     return (end.tv_sec - start.tv_sec) * 1000000.0 + end.tv_usec - start.tv_usec;
+}
+
+double micro_to_mili(double micro) {
+    return micro / 1000.0;
 }
 
 void init_BOARD() {
@@ -141,9 +147,11 @@ void print_BOARD() {
 }
 
 void print_scores() {
-    int w = score(R);
-    int b = score(B);
-    printf("score - red:%i blue:%i\n", w, b);
+    if (!measure_time) {
+        int w = score(R);
+        int b = score(B);
+        printf("score - red:%i blue:%i\n", w, b);
+    }
 }
 
 void free_BOARD() {
@@ -152,9 +160,21 @@ void free_BOARD() {
     free(BOARD);
 }
 
+void print_times() {
+    if (measure_time) {
+        double total_time = time_elapsed(start, end);
+        printf("%i\t%i\t%0.3lf\t%i\t%i\n",
+               BOARD_size, THREADS, micro_to_mili(total_time), score(R), score(B));
+    }
+}
+
 void finish_game() {
-    //print_BOARD();
-    //print_scores();
+    if (measure_time)
+        gettimeofday(&end, NULL);
+
+    print_BOARD();
+    print_scores();
+    print_times();
     free_BOARD();
 }
 
@@ -261,9 +281,6 @@ int make_move(char color) {
 
     move best_moves [BOARD_size];
 
-    struct timeval parallel_start, parallel_end;
-    gettimeofday(&parallel_start, NULL);
-
     cilk_for (int i = 0; i < BOARD_size; i++) {
         move m;
         best_moves[i].heuristic = 0;
@@ -276,8 +293,6 @@ int make_move(char color) {
             }
         }
     }
-    gettimeofday(&parallel_end, NULL);
-    parallel_time += time_elapsed(parallel_start, parallel_end);
     move best_move;
     int max = -1;
     for (int i = 0; i < BOARD_size; i++)
@@ -351,14 +366,8 @@ void get_flags(int argc, char * argv[]) {
     }
 }
 
-double micro_to_seconds(double micro) {
-    return micro / 1000000.0;
-}
-
 
 int main (int argc, char * argv[]) {
-
-    struct timeval start, end;
 
     //int ncores = sysconf(_SC_NPROCESSORS_ONLN);
     get_flags(argc, argv);
@@ -390,44 +399,5 @@ int main (int argc, char * argv[]) {
         usleep(delay * 1000);
     }
     finish_game();
-
-    //printf("Number of Cores:%d\n", ncores );
-    if (measure_time) {
-        gettimeofday(&end, NULL);
-
-        double total_time = time_elapsed(start, end);
-        double serial_time = total_time - parallel_time; //micro seconds
-
-        double p_work = parallel_time * 100 / total_time;
-        double s_work = serial_time * 100 / total_time;
-        /*
-        printf("%lf\n", total_time); //micro
-        printf("%lf\n", serial_time); //micro
-        printf("%lf\n\n", parallel_time); //micro
-        */
-        printf("%0.3lf\n", micro_to_seconds(total_time)); //seconds
-        printf("%0.3lf\n", micro_to_seconds(serial_time)); //seconds
-        printf("%0.3lf\n", micro_to_seconds(parallel_time)); //seconds
-        printf("%0.3lf\n", s_work);
-        printf("%0.3lf\n", p_work);
-
-        printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-
-
-        // printf("Total Time (micro)    = %lf\n", total_time); //micro
-        // printf("Serial Time (micro)   = %lf\n", serial_time); //micro
-        // printf("Parallel Time (micro) = %lf\n", parallel_time); //micro
-        // printf("---------------------------------------------\n");
-        // printf("Total Time (sec)    = %6.3lf\n", micro_to_seconds(total_time)); //seconds
-        // printf("Serial Time (sec)   = %6.3lf\n", micro_to_seconds(serial_time)); //seconds
-        // printf("Parallel Time (sec) = %6.3lf\n", micro_to_seconds(parallel_time)); //seconds
-        // printf("---------------------------------------------\n");
-        // printf("Serial Work:   %0.3lf%%\n", s_work);
-        // printf("Parallel Work: %0.3lf%%\n", p_work);
-
-        // printf("\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\n");
-
-
-    }
 }
 
