@@ -96,11 +96,11 @@ cost_150 <- x  * test_150$time
 #cost_150 <- x  * ((test_150$time - mean(test_150$time)) /sd(test_150$time))
 
 #normalized
-cost_10 = (cost_10-min(cost_10))/(max(cost_10)-min(cost_10))
-cost_25 = (cost_25-min(cost_25))/(max(cost_25)-min(cost_25))
-cost_50 = (cost_50-min(cost_50))/(max(cost_50)-min(cost_50))
-cost_100 = (cost_100-min(cost_100))/(max(cost_100)-min(cost_100))
-cost_150 = (cost_150-min(cost_150))/(max(cost_150)-min(cost_150))
+cost_10  <- (cost_10  -  min(cost_10))  / (max(cost_10)  -  min(cost_10))
+cost_25  <- (cost_25  -  min(cost_25))  / (max(cost_25)  -  min(cost_25))
+cost_50  <- (cost_50  -  min(cost_50))  / (max(cost_50)  -  min(cost_50))
+cost_100 <- (cost_100 -  min(cost_100)) / (max(cost_100) -  min(cost_100))
+cost_150 <- (cost_150 -  min(cost_150)) / (max(cost_150) -  min(cost_150))
 
 cost_range <- range(0, cost_10, cost_25, cost_50, cost_100, cost_150)
 
